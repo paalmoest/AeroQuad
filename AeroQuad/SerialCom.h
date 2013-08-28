@@ -732,7 +732,7 @@ void sendSerialTelemetry() {
   //NTNU-copter spesifc commands
   case '7':
     PrintValueComma(motorArmed);
-
+  
   }
 }
 
