@@ -732,7 +732,7 @@ void sendSerialTelemetry() {
   //NTNU-copter spesifc commands
   case '7':
     motorArmed = OFF;
-    SERIAL_PRINTLN(motorArmed);
+    queryType = '8';
     break;
   
   case '8': // Send all flight data, modfied
@@ -770,7 +770,8 @@ void sendSerialTelemetry() {
     break;
 
   case '9':
-    receiverCommand[2] = 1900;
+    motorArmed = ON;
+    queryType = '8';
     break;
   
   case 'Q':
@@ -778,7 +779,7 @@ void sendSerialTelemetry() {
     int axis_of_flight = (int)readFloatSerial();
     receiverCommand[axis_of_flight] = thrust;
     //receiverCommand[2] = 1900;
-    queryType = 's';
+    queryType = '8';
     break;
   }
 }
