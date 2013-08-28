@@ -731,8 +731,21 @@ void sendSerialTelemetry() {
 
   //NTNU-copter spesifc commands
   case '7':
-    PrintValueComma(motorArmed);
+    motorArmed = OFF;
+    SERIAL_PRINTLN(motorArmed);
+    break;
   
+  case '9':
+    receiverCommand[2] = 1900;
+    break;
+  
+  case 'Q':
+    int thrust = (int)readFloatSerial();
+    int axis_of_flight = (int)readFloatSerial();
+    receiverCommand[axis_of_flight] = thrust;
+    //receiverCommand[2] = 1900;
+    queryType = 's';
+    break;
   }
 }
 
