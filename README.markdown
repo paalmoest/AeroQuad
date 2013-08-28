@@ -1,3 +1,5 @@
+paals version
+
 AeroQuad Flight Software Source Code v3.2
 ========================================
 [http://www.AeroQuad.com](http://www.AeroQuad.com)
