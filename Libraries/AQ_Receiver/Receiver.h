@@ -104,12 +104,12 @@ void readReceiver()
      // }
       receiverCommand[channel] = ((receiverCommandSmooth[channel] - receiverZero[channel]) * receiverXmitFactor) + receiverZero[channel];
     }
-    for (byte channel = THROTTLE; channel < AUX1; channel++) {
+    for (byte channel = THROTTLE; channel < AUX2; channel++) {
       receiverCommand[channel] = receiverCommandSmooth[channel];
     }
   }
   
-  for (byte channel = AUX1; channel < lastReceiverChannel; channel++) {
+  for (byte channel = AUX2; channel < lastReceiverChannel; channel++) {
     receiverCommand[channel] = receiverCommandSmooth[channel];
   }
 

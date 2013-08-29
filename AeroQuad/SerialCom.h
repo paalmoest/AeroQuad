@@ -731,7 +731,8 @@ void sendSerialTelemetry() {
 
   //NTNU-copter spesifc commands
   case '7':
-    motorArmed = OFF;
+    //motorArmed = OFF;
+    altitudeHoldState = ON
     queryType = '8';
     break;
   
