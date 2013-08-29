@@ -68,7 +68,6 @@ int minArmedThrottle; // initial value configured by user
 
 float G_Dt = 0.002; 
 int throttle = 1000;
-boolean autoPilot = false;
 byte motorArmed = OFF;
 byte safetyCheck = OFF;
 byte maxLimit = OFF;

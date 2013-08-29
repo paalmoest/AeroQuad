@@ -95,22 +95,29 @@ void readReceiver()
     receiverCommandSmooth[channel] = filterSmooth(receiverData[channel], receiverCommandSmooth[channel], receiverSmoothFactor[channel]);
   }
   
-
-  // Reduce receiver commands using receiverXmitFactor and center around 1500
   int autopilot_switch =  ((receiverCommandSmooth[7] - receiverZero[7]) * receiverXmitFactor) + receiverZero[7];
-//  if (autopilot_switch > 1500){
+// Reduce receiver commands using receiverXmitFactor and center around 1500
+  if (autopilot_switch < 1500){
     for (byte channel = XAXIS; channel < THROTTLE; channel++) {
-      if(receiverCommand[THROTTLE] > 1500 && channel == ZAXIS && autopilot_switch > 1500){
-        break;
-      }
+     // if(receiverCommand[THROTTLE] > 1500 && channel == ZAXIS && autopilot_switch > 1500){
+      //  continue;
+     // }
       receiverCommand[channel] = ((receiverCommandSmooth[channel] - receiverZero[channel]) * receiverXmitFactor) + receiverZero[channel];
-    }	
-  // No xmitFactor reduction applied for throttle, mode and AUX
-    for (byte channel = THROTTLE; channel < lastReceiverChannel; channel++) {
+    }
+    for (byte channel = THROTTLE; channel < AUX1; channel++) {
       receiverCommand[channel] = receiverCommandSmooth[channel];
     }
   }
-//}
+  
+  for (byte channel = AUX1; channel < lastReceiverChannel; channel++) {
+    receiverCommand[channel] = receiverCommandSmooth[channel];
+  }
+
+  // No xmitFactor reduction applied for throttle, mode and AUX
+ // for (byte channel = THROTTLE; channel < lastReceiverChannel; channel++) {
+    //receiverCommand[channel] = receiverCommandSmooth[channel];
+  //}
+}
 
 void setChannelValue(byte channel,int value);
   

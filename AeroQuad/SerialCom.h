@@ -773,7 +773,7 @@ void sendSerialTelemetry() {
     motorArmed = ON;
     queryType = '8';
     break;
-  
+
   case 'Q':
     int thrust = (int)readFloatSerial();
     int axis_of_flight = (int)readFloatSerial();
