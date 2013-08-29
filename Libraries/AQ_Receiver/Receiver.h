@@ -98,8 +98,11 @@ void readReceiver()
 
   // Reduce receiver commands using receiverXmitFactor and center around 1500
   int autopilot_switch =  ((receiverCommandSmooth[7] - receiverZero[7]) * receiverXmitFactor) + receiverZero[7];
-  if (autopilot_switch > 1500){
+//  if (autopilot_switch > 1500){
     for (byte channel = XAXIS; channel < THROTTLE; channel++) {
+      if(receiverCommand[THROTTLE] > 1500 && channel == ZAXIS && autopilot_switch > 1500){
+        break;
+      }
       receiverCommand[channel] = ((receiverCommandSmooth[channel] - receiverZero[channel]) * receiverXmitFactor) + receiverZero[channel];
     }	
   // No xmitFactor reduction applied for throttle, mode and AUX
@@ -107,7 +110,7 @@ void readReceiver()
       receiverCommand[channel] = receiverCommandSmooth[channel];
     }
   }
-}
+//}
 
 void setChannelValue(byte channel,int value);
   
