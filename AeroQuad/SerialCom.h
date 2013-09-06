@@ -293,6 +293,19 @@ void readSerialCommand() {
       else
         fastTransfer = OFF;
       break;
+    //NTNUcopter se
+    
+    case '9':
+      int roll = readIntegerSerial();
+      int pitch = readIntegerSerial();
+      int yaw = readIntegerSerial();
+      int throttle = readIntegerSerial();
+      receiverCommand[0] = roll;
+      receiverCommand[1] = pitch;
+      receiverCommand[2] = yaw;
+      receiverCommand[3] = throttle;
+      queryType = '8';
+      
     }
   }
 }
@@ -732,7 +745,7 @@ void sendSerialTelemetry() {
   //NTNU-copter spesifc commands
   case '7':
     //motorArmed = OFF;
-    altitudeHoldState = ON
+    altitudeHoldState = ON;
     queryType = '8';
     break;
   
@@ -749,7 +762,7 @@ void sendSerialTelemetry() {
       PrintValueComma((int)altitudeHoldState);
     #else
       PrintValueComma(0);
-      PrintValueComma(0);
+      PrintValueComma(0); 
     #endif
 
     for (byte channel = 0; channel < 8; channel++) { // Configurator expects 8 values
@@ -770,14 +783,9 @@ void sendSerialTelemetry() {
     SERIAL_PRINTLN();
     break;
 
-  case '9':
-    motorArmed = ON;
-    queryType = '8';
-    break;
-
   case 'Q':
-    int thrust = (int)readFloatSerial();
-    int axis_of_flight = (int)readFloatSerial();
+    int thrust = readIntegerSerial();
+    int axis_of_flight = readIntegerSerial();
     receiverCommand[axis_of_flight] = thrust;
     //receiverCommand[2] = 1900;
     queryType = '8';
