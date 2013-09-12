@@ -745,8 +745,43 @@ void sendSerialTelemetry() {
   //NTNU-copter spesifc commands
   case '7':
     //motorArmed = OFF;
-    altitudeHoldState = ON;
-    queryType = '8';
+    PrintValueComma(motorArmed);
+    PrintValueComma(kinematicsAngle[XAXIS]);
+    PrintValueComma(kinematicsAngle[YAXIS]);
+    PrintValueComma(getHeading());
+    #if defined AltitudeHoldBaro || defined AltitudeHoldRangeFinder
+      #if defined AltitudeHoldBaro
+        PrintValueComma(getBaroAltitude());
+      #endif
+      PrintValueComma(rangeFinderRange[ALTITUDE_RANGE_FINDER_INDEX] != INVALID_RANGE ? rangeFinderRange[ALTITUDE_RANGE_FINDER_INDEX] : 0.0);
+      PrintValueComma((int)altitudeHoldState);
+    #else
+      PrintValueComma(0);
+      PrintValueComma(0); 
+    #endif
+
+    for (byte channel = 0; channel < 8; channel++) { // Configurator expects 8 values
+      PrintValueComma((channel < LASTCHANNEL) ? receiverCommand[channel] : 0);
+    }
+
+    for (byte motor = 0; motor < LASTMOTOR; motor++) {
+      PrintValueComma(motorCommand[motor]);
+    }
+    PrintDummyValues(8 - LASTMOTOR); // max of 8 motor outputs supported
+
+    #ifdef BattMonitor
+      PrintValueComma((float)batteryData[0].voltage/100.0); // voltage internally stored at 10mV:s
+    #else
+      PrintValueComma(0);
+    #endif
+    PrintValueComma(flightMode);
+    PrintValueComma(gpsData.state);
+    PrintValueComma(gpsData.lat);
+    PrintValueComma(gpsData.lon);
+    PrintValueComma(gpsData.height);
+    PrintValueComma(gpsData.course);
+    PrintValueComma(gpsData.speed);
+    SERIAL_PRINTLN();
     break;
   
   case '8': // Send all flight data, modfied
